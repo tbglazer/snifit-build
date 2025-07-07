@@ -1,8 +1,6 @@
-package il.co.fibi.snifit.ant.tasks;
-
 package il.co.fibi.snifit.etools.ant.extras;
 
-import com.ibm.etools.ant.extras.common.ResourceHandler;
+import il.co.fibi.snifit.etools.ant.extras.common.ResourceHandler;
 import org.apache.tools.ant.Task;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
