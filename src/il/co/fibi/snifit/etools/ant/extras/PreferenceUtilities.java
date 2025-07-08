@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IExportedPreferences;
 import org.eclipse.core.runtime.preferences.IPreferenceFilter;
 import org.eclipse.core.runtime.preferences.IScopeContext;
+import org.eclipse.core.runtime.preferences.PreferenceFilterEntry;
 import org.osgi.service.prefs.BackingStoreException;
 
 public class PreferenceUtilities {
@@ -39,11 +40,13 @@ public class PreferenceUtilities {
 		}
 		IPreferenceFilter[] filters = new IPreferenceFilter[1];
 		filters[0] = new IPreferenceFilter() {
+			@Override
 			public String[] getScopes() {
 				return scopeNames;
 			}
 
-			public Map<?, ?> getMapping(String scope) {
+			@Override
+			public Map<String, PreferenceFilterEntry[]> getMapping(String scope) {
 				return null;
 			}
 		};

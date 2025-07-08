@@ -3,17 +3,11 @@ package il.co.fibi.snifit.etools.ant.extras;
 import il.co.fibi.snifit.etools.ant.extras.common.NLSMessageConstants;
 import il.co.fibi.snifit.etools.j2ee.ant.internal.AntBundleActivator;
 import il.co.fibi.snifit.etools.j2ee.ant.internal.AntTrace;
-import il.co.fibi.snifit.etools.references.management.ReferenceManager;
 import org.apache.tools.ant.BuildException;
-import org.eclipse.ant.core.AntCorePlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.internal.core.JavaModelManager;
 import org.eclipse.jst.jsp.core.internal.java.search.JSPIndexManager;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.wst.jsdt.internal.core.JavaModelManager;
-import org.osgi.framework.Bundle;
-import org.osgi.service.packageadmin.PackageAdmin;
-import org.osgi.util.tracker.ServiceTracker;
 
 public class DisableIndexer extends FailOnErrorTask {
 	public void execute() throws BuildException {
@@ -86,15 +80,15 @@ public class DisableIndexer extends FailOnErrorTask {
 	}
 
 	private final void disableLinksIndexer() throws Exception {
-		ServiceTracker serviceTracker = new ServiceTracker(AntCorePlugin.getPlugin().getBundle().getBundleContext(),
-				PackageAdmin.class.getName(), null);
-		serviceTracker.open();
-		PackageAdmin packageAdmin = (PackageAdmin) serviceTracker.getService();
-		if (packageAdmin != null) {
-			Bundle referencesBundle = packageAdmin.getBundle(ReferenceManager.class);
-			if (referencesBundle != null)
-				referencesBundle.stop();
-		}
+//		ServiceTracker serviceTracker = new ServiceTracker(AntCorePlugin.getPlugin().getBundle().getBundleContext(),
+//				PackageAdmin.class.getName(), null);
+//		serviceTracker.open();
+//		PackageAdmin packageAdmin = (PackageAdmin) serviceTracker.getService();
+//		if (packageAdmin != null) {
+//			Bundle referencesBundle = packageAdmin.getBundle(ReferenceManager.class);
+//			if (referencesBundle != null)
+//				referencesBundle.stop();
+//		}
 		log(NLSMessageConstants.DISABLE_INDEXER_LINKS_INDEXER);
 	}
 
