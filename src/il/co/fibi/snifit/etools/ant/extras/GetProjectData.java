@@ -117,7 +117,6 @@ public class GetProjectData extends FailOnErrorTask {
 								this.hasSpecifiedNatureProperty));
 						getProject().setUserProperty(this.hasSpecifiedNatureProperty, "FALSE");
 					}
-				
 			}
 		} catch (CoreException e1) {
 			handleError(e1.getMessage(), e1);
