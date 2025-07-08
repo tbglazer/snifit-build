@@ -140,7 +140,8 @@ public abstract class InternalTrace implements DebugOptionsListener {
       dbgOptions.setDebugEnabled(!state); 
   }
   
-  public static final void setUpJUnit(String bundleId) {
+  @SuppressWarnings("deprecation")
+public static final void setUpJUnit(String bundleId) {
     PackageAdmin pkgAdmin = Activator.getInstance().getPackageAdmin();
     Bundle theBundle = null;
     if (pkgAdmin != null) {
