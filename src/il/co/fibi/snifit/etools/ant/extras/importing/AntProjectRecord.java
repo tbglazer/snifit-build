@@ -48,8 +48,8 @@ public class AntProjectRecord {
 			if (getProjectArchiveFile() != null) {
 				InputStream stream = this.importTask.getStructureProvider().getContents(getProjectArchiveFile());
 				if (stream == null) {
-					if (getProjectArchiveFile() instanceof ZipEntry) {
-						Path path = new Path(((ZipEntry) getProjectArchiveFile()).getName());
+					if (getProjectArchiveFile() instanceof ZipEntry zipentry) {
+						Path path = new Path(zipentry.getName());
 						this.projectName = path.segment(path.segmentCount() - 2);
 					}
 				} else {
@@ -60,17 +60,15 @@ public class AntProjectRecord {
 			}
 			if (this.projectName == null) {
 				Path path = new Path(this.projectSystemFile.getPath());
-				if (isDefaultLocation((IPath) path)) {
+				if (isDefaultLocation(path)) {
 					this.projectName = path.segment(path.segmentCount() - 2);
 					setDescription(ResourcesPlugin.getWorkspace().newProjectDescription(this.projectName));
 				} else {
-					setDescription(ResourcesPlugin.getWorkspace().loadProjectDescription((IPath) path));
+					setDescription(ResourcesPlugin.getWorkspace().loadProjectDescription(path));
 					this.projectName = getDescription().getName();
 				}
 			}
-		} catch (CoreException coreException) {
-
-		} catch (IOException iOException) {
+		} catch (CoreException | IOException e) {
 		}
 	}
 

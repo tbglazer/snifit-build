@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class AntBundleActivator extends Plugin {
   private static DebugTrace trace = null;
   
-  public static final String PLUGIN_ID = "com.ibm.etools.j2ee.ant";
+  public static final String PLUGIN_ID = "il.co.fibi.snifit.etools.j2ee.ant";
   
   private static AntBundleActivator plugin = null;
   
@@ -17,8 +17,8 @@ public class AntBundleActivator extends Plugin {
     super.start(context);
     plugin = this;
     AntTrace internalTrace = new AntTrace();
-    Hashtable<String, String> props = new Hashtable<String, String>(1);
-    props.put("listener.symbolic.name", "com.ibm.etools.j2ee.ant");
+    Hashtable<String, String> props = new Hashtable<>(1);
+    props.put("listener.symbolic.name", PLUGIN_ID);
     context.registerService(DebugOptionsListener.class.getName(), internalTrace, props);
     trace = internalTrace.getDebugTrace();
   }

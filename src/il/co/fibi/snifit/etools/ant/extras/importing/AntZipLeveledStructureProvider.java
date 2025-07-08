@@ -19,7 +19,7 @@ public class AntZipLeveledStructureProvider implements AntArchivedImportStructur
 
 	private Map<ZipEntry, List<Object>> children;
 
-	private Map<IPath, ZipEntry> directoryEntryCache = new HashMap<IPath, ZipEntry>();
+	private Map<IPath, ZipEntry> directoryEntryCache = new HashMap<>();
 
 	private int stripLevel;
 
@@ -39,7 +39,7 @@ public class AntZipLeveledStructureProvider implements AntArchivedImportStructur
 		}
 		ZipEntry newEntry = new ZipEntry(pathname.toString());
 		this.directoryEntryCache.put(pathname, newEntry);
-		List<Object> childList = new ArrayList();
+		List<Object> childList = new ArrayList<>();
 		this.children.put(newEntry, childList);
 		List<Object> parentChildList = this.children.get(parent);
 		parentChildList.add(newEntry);
@@ -73,7 +73,7 @@ public class AntZipLeveledStructureProvider implements AntArchivedImportStructur
 	}
 
 	private String stripPath(String path) {
-		String pathOrig = new String(path);
+		String pathOrig = path;
 		String temp = path;
 		for (int i = 0; i < this.stripLevel; i++) {
 			int firstSep = temp.indexOf('/');
@@ -107,8 +107,8 @@ public class AntZipLeveledStructureProvider implements AntArchivedImportStructur
 	}
 
 	protected void initialize() {
-		this.children = new HashMap<ZipEntry, List<Object>>(1000);
-		this.children.put(root, new ArrayList());
+		this.children = HashMap.newHashMap(1000);
+		this.children.put(root, new ArrayList<>());
 		Enumeration<? extends ZipEntry> entries = this.zipFile.entries();
 		while (entries.hasMoreElements()) {
 			ZipEntry entry = entries.nextElement();

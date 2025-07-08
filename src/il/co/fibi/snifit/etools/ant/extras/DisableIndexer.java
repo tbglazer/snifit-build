@@ -19,15 +19,15 @@ public class DisableIndexer extends FailOnErrorTask {
 			validateAttributes(monitor);
 			if (this.name != null)
 				try {
-					if (this.name.equals("jsp")) {
+					if (this.name.equals(JSP_INDEXER_IDENTIFIER)) {
 						disableJSPIndexer();
-					} else if (this.name.equals("javascript")) {
+					} else if (this.name.equals(JS_INDEXER_IDENTIFIER)) {
 						disableJavaScriptIndexer();
-					} else if (this.name.equals("java")) {
+					} else if (this.name.equals(JAVA_INDEXER_IDENTIFIER)) {
 						disableJavaIndexer();
-					} else if (this.name.equals("links")) {
+					} else if (this.name.equals(LINKS_INDEXER_IDENTIFIER)) {
 						disableLinksIndexer();
-					} else if (this.name.equals("all")) {
+					} else if (this.name.equals(ALL_INDEXER_IDENTIFIER)) {
 						disableAllIndexers();
 					}
 				} catch (Exception ex) {
@@ -64,16 +64,19 @@ public class DisableIndexer extends FailOnErrorTask {
 		disableLinksIndexer();
 	}
 
+	@SuppressWarnings("restriction")
 	private final void disableJSPIndexer() throws Exception {
 		JSPIndexManager.getDefault().stop();
 		log(NLSMessageConstants.DISABLE_INDEXER_JSP_INDEXER);
 	}
 
+	@SuppressWarnings("restriction")
 	private final void disableJavaScriptIndexer() {
 		JavaModelManager.getJavaModelManager().shutdown();
 		log(NLSMessageConstants.DISABLE_INDEXER_JS_INDEXER);
 	}
 
+	@SuppressWarnings("restriction")
 	private final void disableJavaIndexer() {
 		JavaModelManager.getIndexManager().shutdown();
 		log(NLSMessageConstants.DISABLE_INDEXER_JAVA_INDEXER);

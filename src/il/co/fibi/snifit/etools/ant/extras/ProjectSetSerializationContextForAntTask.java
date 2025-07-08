@@ -12,6 +12,7 @@ public class ProjectSetSerializationContextForAntTask extends ProjectSetSerializ
 		this.overwriteProject = projects;
 	}
 
+	@Override
 	public IProject[] confirmOverwrite(IProject[] projects) throws TeamException {
 		return this.overwriteProject;
 	}

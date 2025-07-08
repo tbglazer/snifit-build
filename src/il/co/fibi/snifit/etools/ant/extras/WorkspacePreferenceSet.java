@@ -57,11 +57,11 @@ public class WorkspacePreferenceSet extends FailOnErrorTask {
 	public void setPreferenceScope(String scope) {
 		if (scope != null)
 			if (scope.equalsIgnoreCase("instance")) {
-				this.preferenceScope = (IScopeContext) new InstanceScope();
+				this.preferenceScope = InstanceScope.INSTANCE;
 			} else if (scope.equalsIgnoreCase("configuration")) {
-				this.preferenceScope = (IScopeContext) new ConfigurationScope();
+				this.preferenceScope = ConfigurationScope.INSTANCE;
 			} else {
-				this.preferenceScope = (IScopeContext) new DefaultScope();
+				this.preferenceScope = DefaultScope.INSTANCE;
 			}
 	}
 
@@ -71,6 +71,8 @@ public class WorkspacePreferenceSet extends FailOnErrorTask {
 		this.eclipsePrefsSetByAttribute = true;
 	}
 
+	@Override
+	@SuppressWarnings("deprecation")
 	public void execute() throws BuildException {
 		super.execute();
 		MonitorHelper provider = new MonitorHelper(this);
@@ -118,7 +120,6 @@ public class WorkspacePreferenceSet extends FailOnErrorTask {
 								ResourceHandler.getString("WorkspacePreferenceSet.defaultPreferenceQualifier"));
 					this.preferenceQualifier = "";
 				}
-				boolean succesfulSet = false;
 				boolean bool1 = PreferenceUtilities.setPreference(this.preferenceScope, this.preferenceQualifier,
 						this.preferenceName, this.preferenceValue);
 				String prefix = String.valueOf(this.preferenceScope.getName()) + "/" + this.preferenceQualifier;
@@ -176,8 +177,7 @@ public class WorkspacePreferenceSet extends FailOnErrorTask {
 			} else if (this.preferenceType.equalsIgnoreCase("webtoolsValidation")) {
 				this.preferenceType = "webtoolsValidation";
 			} else {
-				handleError(
-						ResourceHandler.getString("WorkspacePreferenceSet.unknownPreferenceType", this.preferenceType));
+				handleError(ResourceHandler.getString("WorkspacePreferenceSet.unknownPreferenceType", this.preferenceType));
 			}
 		if (this.preferenceName == null)
 			handleError(ResourceHandler.getString("WorkspacePreferenceSet.missingPreferenceName"));

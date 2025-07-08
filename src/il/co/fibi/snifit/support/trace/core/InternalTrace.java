@@ -51,14 +51,14 @@ public abstract class InternalTrace implements DebugOptionsListener {
         if (array[i] != null) {
           result.append(array[i].toString());
         } else {
-          result.append("<null>");
+          result.append(NULL_OBJECT_STRING_VALUE);
         } 
         if (i + 1 < array.length)
           result.append(", "); 
       } 
       result.append(")]");
     } else {
-      result.append("<null>");
+      result.append(NULL_OBJECT_STRING_VALUE);
     } 
     return result.toString();
   }
@@ -76,14 +76,14 @@ public abstract class InternalTrace implements DebugOptionsListener {
         if (entry != null) {
           result.append(entry.toString());
         } else {
-          result.append("<null>");
+          result.append(NULL_OBJECT_STRING_VALUE);
         } 
         if (collectionIterator.hasNext())
           result.append(", "); 
       } 
       result.append(")]");
     } else {
-      result.append("<null>");
+      result.append(NULL_OBJECT_STRING_VALUE);
     } 
     return result.toString();
   }
@@ -104,14 +104,14 @@ public abstract class InternalTrace implements DebugOptionsListener {
         if (value != null) {
           result.append(value.toString());
         } else {
-          result.append("<null>");
+          result.append(NULL_OBJECT_STRING_VALUE);
         } 
         if (mapIterator.hasNext())
           result.append(", "); 
       } 
       result.append(")]");
     } else {
-      result.append("<null>");
+      result.append(NULL_OBJECT_STRING_VALUE);
     } 
     return result.toString();
   }
@@ -125,7 +125,7 @@ public abstract class InternalTrace implements DebugOptionsListener {
       result.append(obj.toString());
       result.append("]");
     } else {
-      result.append("<null>");
+      result.append(NULL_OBJECT_STRING_VALUE);
     } 
     return result.toString();
   }
@@ -158,7 +158,7 @@ public abstract class InternalTrace implements DebugOptionsListener {
           ex.printStackTrace();
         } 
         Iterator<Map.Entry<Object, Object>> entriesIterator = entries.entrySet().iterator();
-        Map<String, String> debugEntries = new HashMap<String, String>();
+        Map<String, String> debugEntries = new HashMap<>();
         while (entriesIterator.hasNext()) {
           Map.Entry<Object, Object> entry = entriesIterator.next();
           String value = (String)entry.getValue();

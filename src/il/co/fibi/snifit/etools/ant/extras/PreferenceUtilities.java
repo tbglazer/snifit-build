@@ -29,7 +29,7 @@ public class PreferenceUtilities {
 
 	private static final String MAX_FILE_STATE_SIZE_PREFERENCE_KEY = "/instance/org.eclipse.core.resources/description.maxfilestatesize";
 
-	private static final String BUNDLE_ID = "com.ibm.etools.j2ee.ant";
+	private static final String BUNDLE_ID = "il.co.fibi.snifit.etools.j2ee.ant";
 
 	public static final IPreferenceFilter[] createPreferenceFilter(IScopeContext[] scopes) {
 		final String[] scopeNames = new String[scopes.length];
@@ -96,17 +96,16 @@ public class PreferenceUtilities {
 		Properties preferences = loadPreferenceFile(preferenceFile);
 		if (!preferences.isEmpty()) {
 			boolean preferencesChanged = false;
-			String autoBuild = preferences.getProperty("/instance/org.eclipse.core.resources/description.autobuilding");
+			String autoBuild = preferences.getProperty(AUTO_BUILD_PREFERENCE_KEY);
 			if (autoBuild != null) {
-				preferences.remove("/instance/org.eclipse.core.resources/description.autobuilding");
+				preferences.remove(AUTO_BUILD_PREFERENCE_KEY);
 				HeadlessWorkspaceSettingsHelper.userEnabledAutoBuild = true;
 				HeadlessWorkspaceSettingsHelper.userEnabledAutoBuildValue = Boolean.valueOf(autoBuild).booleanValue();
 				preferencesChanged = true;
 			}
-			String maxFileStateSize = preferences
-					.getProperty("/instance/org.eclipse.core.resources/description.maxfilestatesize");
+			String maxFileStateSize = preferences.getProperty(MAX_FILE_STATE_SIZE_PREFERENCE_KEY);
 			if (maxFileStateSize != null) {
-				preferences.remove("/instance/org.eclipse.core.resources/description.maxfilestatesize");
+				preferences.remove(MAX_FILE_STATE_SIZE_PREFERENCE_KEY);
 				HeadlessWorkspaceSettingsHelper.userEnabledMaxFileStateSize = true;
 				HeadlessWorkspaceSettingsHelper.userEnabledMaxFileStateSizeValue = Long.valueOf(maxFileStateSize)
 						.longValue();
@@ -190,10 +189,10 @@ public class PreferenceUtilities {
 			fullKey.append("/");
 			fullKey.append(key);
 			String fullKeyString = fullKey.toString();
-			if ("/instance/org.eclipse.core.resources/description.autobuilding".equals(fullKeyString)) {
+			if (AUTO_BUILD_PREFERENCE_KEY.equals(fullKeyString)) {
 				HeadlessWorkspaceSettingsHelper.userEnabledAutoBuild = true;
 				HeadlessWorkspaceSettingsHelper.userEnabledAutoBuildValue = Boolean.valueOf(newValue).booleanValue();
-			} else if ("/instance/org.eclipse.core.resources/description.maxfilestatesize".equals(fullKeyString)) {
+			} else if (MAX_FILE_STATE_SIZE_PREFERENCE_KEY.equals(fullKeyString)) {
 				HeadlessWorkspaceSettingsHelper.userEnabledMaxFileStateSize = true;
 				HeadlessWorkspaceSettingsHelper.userEnabledMaxFileStateSizeValue = Long.valueOf(newValue).longValue();
 			} else {
@@ -218,7 +217,7 @@ public class PreferenceUtilities {
 	}
 
 	private static final CoreException getCoreException(int severity, String message, Exception ex) {
-		Status status = new Status(severity, "com.ibm.etools.j2ee.ant", message, ex);
+		Status status = new Status(severity, BUNDLE_ID, message, ex);
 		return new CoreException((IStatus) status);
 	}
 }

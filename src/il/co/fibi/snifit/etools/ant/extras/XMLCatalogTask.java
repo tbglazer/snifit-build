@@ -17,6 +17,7 @@ import org.eclipse.wst.xml.core.internal.catalog.provisional.ICatalogEntry;
 import org.eclipse.wst.xml.core.internal.catalog.provisional.INextCatalog;
 
 public class XMLCatalogTask extends FailOnErrorTask {
+	@SuppressWarnings("restriction")
 	public void execute() throws BuildException {
 		super.execute();
 		MonitorHelper provider = new MonitorHelper(this);
@@ -55,7 +56,7 @@ public class XMLCatalogTask extends FailOnErrorTask {
 						newEntry.setURI(this.uri);
 						if (this.keyType.equalsIgnoreCase("public") && this.webURL != null)
 							newEntry.setAttributeValue("webURL", this.webURL);
-						userCatalog.addCatalogElement((ICatalogElement) newEntry);
+						userCatalog.addCatalogElement(newEntry);
 						saveCatalog(userCatalog, monitor);
 						if (this.verbose)
 							log(ResourceHandler.getString("XMLCatalog.addUserCatalogSuccess",
@@ -70,6 +71,7 @@ public class XMLCatalogTask extends FailOnErrorTask {
 		}
 	}
 
+	@SuppressWarnings("restriction")
 	private void saveCatalog(ICatalog catalog, IProgressMonitor monitor) throws BuildException {
 		if (catalog != null)
 			try {
@@ -103,9 +105,7 @@ public class XMLCatalogTask extends FailOnErrorTask {
 			try {
 				URI uriObject = new URI(this.uri);
 				uriObject.toURL();
-			} catch (MalformedURLException malformedURLException) {
-				handleError(ResourceHandler.getString("XMLCatalog.malformedURI", this.uri));
-			} catch (URISyntaxException uRISyntaxException) {
+			} catch (MalformedURLException | URISyntaxException malformedURLException) {
 				handleError(ResourceHandler.getString("XMLCatalog.malformedURI", this.uri));
 			}
 			if (this.keyType == null)

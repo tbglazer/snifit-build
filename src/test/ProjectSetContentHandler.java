@@ -1,4 +1,4 @@
-package il.co.fibi.snifit.etools.ant.extras;
+package mataf.snifit.tasks;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,29 +21,19 @@ public class ProjectSetContentHandler extends DefaultHandler {
 
 	List<String> references;
 
-	boolean isVersionOne = false;
-
 	@Override
 	public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
 		String elementName = getElementName(localName, qName);
 		if (elementName.equals("psf")) {
-			this.map = new HashMap<>();
+			this.map = new HashMap<String, List<String>>();
 			this.inPsf = true;
-			String version = atts.getValue("version");
-			this.isVersionOne = version.equals("1.0");
-			return;
-		}
-		if (this.isVersionOne)
-			return;
-		if (elementName.equals("provider")) {
+		} else if (elementName.equals("provider")) {
 			if (!this.inPsf)
 				throw new SAXException("Element provider must be contained in element psf.");
 			this.inProvider = true;
 			this.id = atts.getValue("id");
-			this.references = new ArrayList<>();
-			return;
-		}
-		if (elementName.equals("project")) {
+			this.references = new ArrayList<String>();
+		} else if (elementName.equals("project")) {
 			if (!this.inProvider)
 				throw new SAXException("Element project must be contained in element provider.");
 			this.inProject = true;
@@ -57,17 +47,11 @@ public class ProjectSetContentHandler extends DefaultHandler {
 		String elementName = getElementName(localName, qName);
 		if (elementName.equals("psf")) {
 			this.inPsf = false;
-			return;
-		}
-		if (this.isVersionOne)
-			return;
-		if (elementName.equals("provider")) {
+		} else if (elementName.equals("provider")) {
 			this.map.put(this.id, this.references);
 			this.references = null;
 			this.inProvider = false;
-			return;
-		}
-		if (elementName.equals("project")) {
+		} else if (elementName.equals("project")) {
 			this.inProject = false;
 		}
 	}
@@ -76,12 +60,8 @@ public class ProjectSetContentHandler extends DefaultHandler {
 		return this.map;
 	}
 
-	public boolean isVersionOne() {
-		return this.isVersionOne;
-	}
-
 	private String getElementName(String localName, String qName) {
-		if (localName != null && !localName.isEmpty())
+		if (localName != null && localName.length() > 0)
 			return localName;
 		return qName;
 	}

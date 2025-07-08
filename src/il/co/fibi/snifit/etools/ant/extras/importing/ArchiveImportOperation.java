@@ -20,7 +20,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.osgi.util.NLS;
 
 public class ArchiveImportOperation {
@@ -62,14 +62,13 @@ public class ArchiveImportOperation {
 				creationCount + 100);
 		AntContainerGenerator generator = new AntContainerGenerator(this.destinationPath);
 		validateFiles(this.selectedFiles);
-		this.destinationContainer = generator
-				.generateContainer((IProgressMonitor) new SubProgressMonitor(this.monitor, 50));
+		this.destinationContainer = generator.generateContainer(SubMonitor.convert(this.monitor, 50));
 		importFileSystemObjects(this.selectedFiles);
 		this.monitor.done();
 	}
 
 	private void validateFiles(List<Object> sourceFiles) {
-		List<Object> overwriteReadonly = new ArrayList();
+		List<Object> overwriteReadonly = new ArrayList<>();
 		collectExistingReadonlyFiles(this.destinationPath, sourceFiles, overwriteReadonly);
 	}
 
@@ -77,7 +76,6 @@ public class ArchiveImportOperation {
 		Path path = null;
 		IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 		Iterator<Object> sourceIter = sources.iterator();
-		IPath sourceRootPath = null;
 		if (this.source != null)
 			path = new Path(this.provider.getFullPath(this.source));
 		while (sourceIter.hasNext()) {
@@ -122,7 +120,7 @@ public class ArchiveImportOperation {
 		IContainer containerResource = getDestinationContainerFor(fileObject);
 		String fileObjectPath = this.provider.getFullPath(fileObject);
 		this.monitor.subTask(fileObjectPath);
-		IFile targetResource = containerResource.getFile((IPath) new Path(this.provider.getLabel(fileObject)));
+		IFile targetResource = containerResource.getFile(new Path(this.provider.getLabel(fileObject)));
 		IPath targetPath = targetResource.getLocation();
 		if (targetPath != null && targetPath.toFile().equals(new File(fileObjectPath)))
 			return;
@@ -182,13 +180,13 @@ public class ArchiveImportOperation {
 			if (!iFolder.exists())
 				iFolder.create(false, true, null);
 		}
-		return (IContainer) iFolder;
+		return iFolder;
 	}
 
 	private void setResourceAttributes(IFile targetResource, Object fileObject) throws CoreException {
 		long timeStamp = 0L;
-		if (fileObject instanceof ZipEntry) {
-			long zipTimeStamp = ((ZipEntry) fileObject).getTime();
+		if (fileObject instanceof ZipEntry ifileobject) {
+			long zipTimeStamp = ifileobject.getTime();
 			if (zipTimeStamp != -1L)
 				timeStamp = zipTimeStamp;
 		}
@@ -201,7 +199,7 @@ public class ArchiveImportOperation {
 		int segmentCount = path.segmentCount();
 		IProject iProject = ((IWorkspaceRoot) this.destinationContainer).getProject(path.segment(0));
 		for (int i = 1; i < segmentCount; i++) {
-			iFolder = iProject.getFolder((IPath) new Path(path.segment(i)));
+			iFolder = iProject.getFolder(new Path(path.segment(i)));
 			if (!iFolder.exists())
 				iFolder.create(false, true, null);
 		}
@@ -209,8 +207,8 @@ public class ArchiveImportOperation {
 	}
 
 	private IFolder getFolder(IResource resource) {
-		if (resource instanceof IFolder)
-			return (IFolder) resource;
+		if (resource instanceof IFolder ifolder)
+			return ifolder;
 		Object adapted = resource.getAdapter(IFolder.class);
 		if (adapted == null)
 			return null;
@@ -218,8 +216,8 @@ public class ArchiveImportOperation {
 	}
 
 	private IFile getFile(IResource resource) {
-		if (resource instanceof IFile)
-			return (IFile) resource;
+		if (resource instanceof IFile ifile)
+			return ifile;
 		Object adapted = resource.getAdapter(IFile.class);
 		if (adapted == null)
 			return null;

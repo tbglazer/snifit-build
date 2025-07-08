@@ -20,15 +20,7 @@ import org.osgi.framework.Bundle;
 
 @Deprecated
 public class TargetRuntimeCreate extends FailOnErrorTask {
-	public static String WASv70Type = "com.ibm.ws.ast.st.runtime.v70";
-
-	public static String WASv61Type = "com.ibm.ws.ast.st.runtime.v61";
-
-	public static String WASv60Type = "com.ibm.ws.ast.st.runtime.v60";
-
-	public static String WASv51Type = "com.ibm.etools.websphere.runtime.v51.base";
-
-	public static String WASv50Type = "com.ibm.etools.websphere.runtime.v50.base";
+	public static String WASv85Type = "com.ibm.ws.ast.st.runtime.v85";
 
 	String targetId = null;
 
@@ -44,6 +36,7 @@ public class TargetRuntimeCreate extends FailOnErrorTask {
 		setTaskName("targetRuntimeCreate");
 	}
 
+	@SuppressWarnings("restriction")
 	public void execute() throws BuildException {
 		super.execute();
 		MonitorHelper provider = new MonitorHelper(this);
@@ -170,9 +163,9 @@ public class TargetRuntimeCreate extends FailOnErrorTask {
 		if (this.targetId == null)
 			handleError(ResourceHandler.getString("TargetRuntimeCreate.missingTargetId"));
 		if (this.runtimeTypeId == null) {
-			String msg = ResourceHandler.getString("TargetRuntimeCreate.usingDefaultRuntimeTypeId", WASv60Type);
+			String msg = ResourceHandler.getString("TargetRuntimeCreate.usingDefaultRuntimeTypeId", WASv85Type);
 			log(msg);
-			this.runtimeTypeId = WASv60Type;
+			this.runtimeTypeId = WASv85Type;
 		}
 		if (this.runtimeName == null) {
 			String msg = ResourceHandler.getString("TargetRuntimeCreate.usingDefaultTargetId", this.targetId);

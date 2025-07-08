@@ -53,8 +53,6 @@ public class ProjectBuild extends FailOnErrorTask {
     MonitorHelper provider = new MonitorHelper(this);
     IProgressMonitor monitor = provider.createProgressGroup();
     try {
-      ProjectGetErrors projectGetErrors;
-      int errCount;
       validateAttributes(monitor);
       if (isDisableValidators())
         ValidationFramework.getDefault().suspendValidation(this.workspaceProject, true); 

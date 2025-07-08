@@ -23,6 +23,7 @@ import org.eclipse.wst.server.core.ServerCore;
 import org.eclipse.wst.validation.ValidationFramework;
 
 public class BuildUtilities {
+	@SuppressWarnings("restriction")
 	private static final void waitForStubRuntimes(Task task) throws BuildException {
 		Job[] allJobs = Job.getJobManager().find(null);
 		String wasRuntimeCreationJobName = WebSphereCorePlugin.getResourceStr("L-UpdatingWTERuntime");

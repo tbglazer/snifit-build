@@ -13,7 +13,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.osgi.util.NLS;
 
 public class AntContainerGenerator {
@@ -33,16 +33,16 @@ public class AntContainerGenerator {
 	}
 
 	protected IFolder createFolderHandle(IContainer container1, String folderName) {
-		return container1.getFolder((IPath) new Path(folderName));
+		return container1.getFolder(new Path(folderName));
 	}
 
 	protected IProject createProject(IProject projectHandle, IProgressMonitor monitor) throws CoreException {
 		try {
 			monitor.beginTask("", 2000);
-			projectHandle.create((IProgressMonitor) new SubProgressMonitor(monitor, 1000));
+			projectHandle.create(SubMonitor.convert(monitor, 1000));
 			if (monitor.isCanceled())
 				throw new OperationCanceledException();
-			projectHandle.open((IProgressMonitor) new SubProgressMonitor(monitor, 1000));
+			projectHandle.open(SubMonitor.convert(monitor, 1000));
 			if (monitor.isCanceled())
 				throw new OperationCanceledException();
 		} finally {
@@ -69,7 +69,7 @@ public class AntContainerGenerator {
 						.findMember(AntContainerGenerator.this.containerFullPath);
 				if (AntContainerGenerator.this.container != null)
 					return;
-				AntContainerGenerator.this.container = (IContainer) root;
+				AntContainerGenerator.this.container = root;
 				for (int i = 0; i < AntContainerGenerator.this.containerFullPath.segmentCount(); i++) {
 					String currentSegment = AntContainerGenerator.this.containerFullPath.segment(i);
 					IResource resource = AntContainerGenerator.this.container.findMember(currentSegment);
@@ -77,13 +77,13 @@ public class AntContainerGenerator {
 						AntContainerGenerator.this.container = (IContainer) resource;
 					} else if (i == 0) {
 						IProject projectHandle = AntContainerGenerator.this.createProjectHandle(root, currentSegment);
-						AntContainerGenerator.this.container = (IContainer) AntContainerGenerator.this.createProject(
-								projectHandle, (IProgressMonitor) new SubProgressMonitor(monitor1, 1000));
+						AntContainerGenerator.this.container = AntContainerGenerator.this
+								.createProject(projectHandle, SubMonitor.convert(monitor, 1000));
 					} else {
 						IFolder folderHandle = AntContainerGenerator.this
 								.createFolderHandle(AntContainerGenerator.this.container, currentSegment);
-						AntContainerGenerator.this.container = (IContainer) AntContainerGenerator.this
-								.createFolder(folderHandle, (IProgressMonitor) new SubProgressMonitor(monitor1, 1000));
+						AntContainerGenerator.this.container = AntContainerGenerator.this
+								.createFolder(folderHandle, SubMonitor.convert(monitor1, 1000));
 					}
 				}
 			}

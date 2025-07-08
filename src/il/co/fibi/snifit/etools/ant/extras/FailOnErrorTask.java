@@ -18,7 +18,7 @@ public abstract class FailOnErrorTask extends Task {
 		log(errorMessage, 0);
 		if (ex != null) {
 			int severity = this.failOnError ? 4 : 2;
-			Status status = new Status(severity, "com.ibm.etools.j2ee.ant", errorMessage, ex);
+			Status status = new Status(severity, "il.co.fibi.snifit.etools.j2ee.ant", errorMessage, ex);
 			AntBundleActivator.getInstance().getLog().log((IStatus) status);
 		}
 		if (this.failOnError) {

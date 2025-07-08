@@ -9,6 +9,8 @@ public class ResourceHandler {
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
+	private ResourceHandler() {}
+	
 	public static String getString(String key) {
 		try {
 			if (key == null)

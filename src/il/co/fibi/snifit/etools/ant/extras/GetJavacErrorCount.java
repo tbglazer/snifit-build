@@ -23,6 +23,7 @@ public class GetJavacErrorCount extends FailOnErrorTask {
 
 	int UNKNOWN_ERRORS = -1;
 
+	@Override
 	public void execute() throws BuildException {
 		super.execute();
 		int errorCount = this.UNKNOWN_ERRORS;
@@ -55,7 +56,7 @@ public class GetJavacErrorCount extends FailOnErrorTask {
 			}
 			return numErrors;
 		} catch (CoreException e) {
-			handleError(ResourceHandler.getString("Common.coreException", e.getMessage()), (Exception) e);
+			handleError(ResourceHandler.getString("Common.coreException", e.getMessage()), e);
 			return this.UNKNOWN_ERRORS;
 		}
 	}
