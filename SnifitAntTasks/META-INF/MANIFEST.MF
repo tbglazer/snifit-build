@@ -1,8 +1,15 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: il.co.fibi.snifit.build
-Bundle-SymbolicName: SnifitAntTasks
+Bundle-Name: SnifitAntTasks
+Bundle-SymbolicName: il.co.fibi.snifit.ant.tasks;singleton:=true
 Bundle-Version: 1.0.0.qualifier
+Export-Package: il.co.fibi.snifit.ant.extras,
+ il.co.fibi.snifit.etools.ant.extras,
+ il.co.fibi.snifit.etools.ant.extras.common,
+ il.co.fibi.snifit.etools.ant.extras.importing,
+ il.co.fibi.snifit.etools.j2ee.ant.internal,
+ il.co.fibi.snifit.support.trace.core,
+ il.co.fibi.snifit.support.trace.internal
 Require-Bundle: org.eclipse.ant.core;bundle-version="3.7.600",
  org.eclipse.core.resources;bundle-version="3.22.100",
  org.eclipse.core.runtime;bundle-version="3.33.0",
@@ -19,5 +26,5 @@ Require-Bundle: org.eclipse.ant.core;bundle-version="3.7.600",
  org.eclipse.team.core;bundle-version="3.10.600",
  org.eclipse.jst.j2ee;bundle-version="1.2.1200",
  org.eclipse.wst.xml.core;bundle-version="1.2.900"
-Automatic-Module-Name: SnifitBuild
+Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: JavaSE-21
