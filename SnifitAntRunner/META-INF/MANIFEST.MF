@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: SnifitAntRunner
-Bundle-SymbolicName: SnifitAntRunner
-Bundle-Version: 1.0.0.qualifier
-Require-Bundle: org.eclipse.swt,
- org.eclipse.jface
-Automatic-Module-Name: SnifitAntRunner
-Bundle-RequiredExecutionEnvironment: JavaSE-21
