@@ -1,4 +1,4 @@
-package il.co.fibi.snifit.ant.runner;
+package il.co.fibi.snifit.ant.extras.runner;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,13 +10,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+
 import org.eclipse.ant.core.AntCorePlugin;
 import org.eclipse.ant.core.AntCorePreferences;
 import org.eclipse.ant.core.AntRunner;
 import org.eclipse.ant.core.IAntClasspathEntry;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobManager;
@@ -34,6 +34,9 @@ public class RunAnt extends AntRunner {
 	@Override
 	public Object run(Object argArray) throws Exception {
 		URL[] classloaderURLs = getClasspathURLEntries();
+		for (URL url: classloaderURLs) {
+			System.err.println("*****" + url.toString());
+		}
 		if (classloaderURLs != null && classloaderURLs.length > 0)
 			setCustomClasspath(classloaderURLs);
 		System.setProperty("ant.headless.environment", "true");
@@ -76,35 +79,38 @@ public class RunAnt extends AntRunner {
 		if (antAdditionalCPEntries != null)
 			for (int i = 0; i < antAdditionalCPEntries.length; i++)
 				bundleURL.add(antAdditionalCPEntries[i].getEntryURL());
-		IExtensionRegistry extRegistry = Platform.getExtensionRegistry();
-		/*************************************************************************************/
-		System.err.println("************ extRegistry =" + extRegistry);
-		/*************************************************************************************/
-		if (extRegistry != null) {
-			IConfigurationElement[] bundlesCPEntries = extRegistry
-					.getConfigurationElementsFor("il.co.fibi.snifit.ant.extras", "bundleClasspathEntries");
-			/*************************************************************************************/
-			System.err.println("************ bundleClasspathEntries.length = " + bundlesCPEntries.length);
-			/*************************************************************************************/
-			for (int bundleIndex = 0; bundleIndex < bundlesCPEntries.length; bundleIndex++) {
-				String bundleName = bundlesCPEntries[bundleIndex].getAttribute("name");
-				if (bundleName != null) {
-					Bundle bundle = getBundle(bundleName);
-					if (bundle != null) {
-						URL root = bundle.getEntry("/");
-						bundleURL.add(root);
-						IConfigurationElement[] libraries = bundlesCPEntries[bundleIndex].getChildren("library");
-						for (int libIndex = 0; libIndex < libraries.length; libIndex++) {
-							String libPath = libraries[libIndex].getAttribute("path");
-							if (libPath != null) {
-								URL libraryURL = bundle.getEntry(libPath);
-								bundleURL.add(libraryURL);
-							}
-						}
-					}
-				}
-			}
+		Bundle bundle = getBundle("il.co.fibi.snifit.ant.extras");
+		try {
+			URL rootUrl = FileLocator.resolve(bundle.getEntry("/"));
+			bundleURL.add(rootUrl.toURI().resolve("bin/").toURL());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+//		
+//		IExtensionRegistry extRegistry = Platform.getExtensionRegistry();
+//		if (extRegistry != null) {
+//			IConfigurationElement[] bundlesCPEntries = extRegistry.getConfigurationElementsFor(
+//					"il.co.fibi.snifit.ant.extras.tasks", "org.eclipse.ant.core.extraClasspathEntries");
+//			for (int bundleIndex = 0; bundleIndex < bundlesCPEntries.length; bundleIndex++) {
+//				String bundleName = bundlesCPEntries[bundleIndex].getAttribute("name");
+//				if (bundleName != null) {
+//					Bundle bundle = getBundle(bundleName);
+//					if (bundle != null) {
+//						URL root = bundle.getEntry("/");
+//						bundleURL.add(root);
+//						IConfigurationElement[] libraries = bundlesCPEntries[bundleIndex].getChildren("library");
+//						for (int libIndex = 0; libIndex < libraries.length; libIndex++) {
+//							String libPath = libraries[libIndex].getAttribute("path");
+//							if (libPath != null) {
+//								URL libraryURL = bundle.getEntry(libPath);
+//								bundleURL.add(libraryURL);
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
 		return bundleURL.<URL>toArray(new URL[bundleURL.size()]);
 	}
 
@@ -141,14 +147,15 @@ public class RunAnt extends AntRunner {
 					bufferedWriter.append(LINE_SEPARATOR);
 				}
 			} catch (IOException ioEx) {
-				Status status = new Status(4, "il.co.fibi.snifit.ant.runner", 0, ioEx.getMessage(), ioEx);
+				Status status = new Status(4, "il.co.fibi.snifit.ant.extras.runner", 0, ioEx.getMessage(), ioEx);
 				AntCorePlugin.getPlugin().getLog().log(status);
 			} finally {
 				if (bufferedWriter != null)
 					try {
 						bufferedWriter.close();
 					} catch (IOException ioEx) {
-						Status status = new Status(1, "il.co.fibi.snifit.ant.runner", 0, ioEx.getMessage(), ioEx);
+						Status status = new Status(1, "il.co.fibi.snifit.ant.extras.runner", 0, ioEx.getMessage(),
+								ioEx);
 						AntCorePlugin.getPlugin().getLog().log(status);
 					}
 			}

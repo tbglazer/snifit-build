@@ -251,7 +251,7 @@ public class NLSMessageConstants extends NLS {
   
   public static String GENERATEEJB3STUBS_GENERATE_STUBS_TO_OUTPUT;
   
-  private static final String BUNDLE_NAME = "il.co.fibi.snifit.ant.extras.common.NLSMessages";
+  private static final String BUNDLE_NAME = "il.co.fibi.snifit.ant.extras.tasks.common.NLSMessages";
   
   static {
     NLS.initializeMessages(BUNDLE_NAME, il.co.fibi.snifit.ant.extras.common.NLSMessageConstants.class);

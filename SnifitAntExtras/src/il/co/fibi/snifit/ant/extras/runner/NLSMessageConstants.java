@@ -1,4 +1,4 @@
-package il.co.fibi.snifit.ant.runner;
+package il.co.fibi.snifit.ant.extras.runner;
 
 import org.eclipse.osgi.util.NLS;
 
@@ -17,7 +17,7 @@ public class NLSMessageConstants extends NLS {
   
   public static String HEADLESS_WORKSPACE_SETTINGS_RESTORE_FAILED;
   
-  private static final String BUNDLE_NAME = "il.co.fibi.snifit.ant.runner.NLSMessages";
+  private static final String BUNDLE_NAME = "il.co.fibi.snifit.ant.extras.runner.NLSMessages";
   
   static {
     NLS.initializeMessages(BUNDLE_NAME, NLSMessageConstants.class);

@@ -1,53 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
-<plugin>
+<!--plugin>
    <extension
          id="il.co.fibi.snifit.ant.tasks"
          name="%tasksName"
          point="org.eclipse.ant.core.antTasks">
      <antTask library="lib/antextras.jar" name="snifit.captureBuildMessages" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.CaptureBuildMessages" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.CaptureBuildMessages" />
      <antTask library="lib/antextras.jar" name="snifit.disableIndexer" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.DisableIndexer" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.DisableIndexer" />
      <antTask library="lib/antextras.jar" name="snifit.getJavacErrorCount" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.GetJavacErrorCount" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.GetJavacErrorCount" />
      <antTask library="lib/antextras.jar" name="snifit.getProjectData" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.GetProjectData" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.GetProjectData" />
      <antTask library="lib/antextras.jar" name="snifit.productDebug" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.ProductDebug" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.ProductDebug" />
      <antTask library="lib/antextras.jar" name="snifit.projectBuild" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.ProjectBuild" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.ProjectBuild" />
      <antTask library="lib/antextras.jar" name="snifit.projectGetErrors" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.ProjectGetErrors" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.ProjectGetErrors" />
      <antTask library="lib/antextras.jar" name="snifit.projectImport" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.ProjectImport" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.ProjectImport" />
      <antTask library="lib/antextras.jar" name="snifit.projectSetBuild" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.ProjectSetBuild" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.ProjectSetBuild" />
      <antTask library="lib/antextras.jar" name="snifit.projectSetImport" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.ProjectSetImport" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.ProjectSetImport" />
      <antTask library="lib/antextras.jar" name="snifit.setDebugInfo" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.SetDebugInfo" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.SetDebugInfo" />
      <antTask library="lib/antextras.jar" name="snifit.targetRuntimeCreate" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.TargetRuntimeCreate" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.TargetRuntimeCreate" />
      <antTask library="lib/antextras.jar" name="snifit.workspaceBuild" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.WorkspaceBuild" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.WorkspaceBuild" />
      <antTask library="lib/antextras.jar" name="snifit.workspaceGetErrors" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.WorkspaceGetErrors" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.WorkspaceGetErrors" />
      <antTask library="lib/antextras.jar" name="snifit.workspacePreferenceExport" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.WorkspacePreferenceExport" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.WorkspacePreferenceExport" />
      <antTask library="lib/antextras.jar" name="snifit.workspacePreferenceFile" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.WorkspacePreferenceFile" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.WorkspacePreferenceFile" />
      <antTask library="lib/antextras.jar" name="snifit.workspacePreferenceGet" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.WorkspacePreferenceGet" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.WorkspacePreferenceGet" />
      <antTask library="lib/antextras.jar" name="snifit.workspacePreferenceSet" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.WorkspacePreferenceSet" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.WorkspacePreferenceSet" />
      <antTask library="lib/antextras.jar" name="snifit.xmlCatalogTask" 
-     	headless="true" class="il.co.fibi.snifit.etools.ant.extras.XMLCatalogTask" />
+     	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.XMLCatalogTask" />
    </extension>
    <extension
-         id="il.co.fibi.snifit.ant.tasks.classoath"
+         id="il.co.fibi.snifit.ant.tasks.classpath"
          name="%classpathName"
          point="org.eclipse.ant.core.extraClasspathEntries">
    	  <extraClasspathEntry library="lib/antextras.jar"/>
    </extension>
+</plugin-->
+<plugin>
+   <extension
+         id="antRunner"
+         name="%runnerName"
+         point="org.eclipse.core.runtime.applications">
+  	  <application>
+           <run
+             class="il.co.fibi.snifit.ant.extras.runner.RunAnt" />
+    </application>         
+   </extension>
 </plugin>
+

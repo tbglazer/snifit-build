@@ -1,4 +1,4 @@
-package il.co.fibi.snifit.ant.runner;
+package il.co.fibi.snifit.ant.extras.runner;
 
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceDescription;

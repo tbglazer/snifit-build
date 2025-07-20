@@ -35,10 +35,4 @@ public abstract class FailOnErrorTask extends Task {
 
 	protected boolean failOnError = true;
 
-	@Override
-	public void setProject(Project p) {
-	    System.out.println("[DEBUG] setProject() called with: " + p);
-	    super.setProject(p);
-	}
-
 }

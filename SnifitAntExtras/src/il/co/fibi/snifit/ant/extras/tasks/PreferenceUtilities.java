@@ -1,17 +1,13 @@
 package il.co.fibi.snifit.ant.extras.tasks;
 
-//import il.co.fibi.snifit.ant.extras.HeadlessWorkspaceSettingsHelper;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Map;
 import java.util.Properties;
-import org.eclipse.ant.core.AntCorePlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -25,11 +21,7 @@ import org.osgi.service.prefs.BackingStoreException;
 public class PreferenceUtilities {
 	public static final String ECLIPSE_PREFERENCE_SUPPORT = "useEclipsePrefs";
 
-	//private static final String AUTO_BUILD_PREFERENCE_KEY = "/instance/org.eclipse.core.resources/description.autobuilding";
-
-	//private static final String MAX_FILE_STATE_SIZE_PREFERENCE_KEY = "/instance/org.eclipse.core.resources/description.maxfilestatesize";
-
-	private static final String BUNDLE_ID = "il.co.fibi.snifit.etools.j2ee.ant";
+	private static final String BUNDLE_ID = "il.co.fibi.snifit.ant.extras.tasks";
 
 	public static final IPreferenceFilter[] createPreferenceFilter(IScopeContext[] scopes) {
 		final String[] scopeNames = new String[scopes.length];
@@ -92,36 +84,8 @@ public class PreferenceUtilities {
 	}
 
 	private static final File massagePreferenceFile(File preferenceFile) throws CoreException {
-		File newPrefFile;
-		Properties preferences = loadPreferenceFile(preferenceFile);
-		if (!preferences.isEmpty()) {
-			boolean preferencesChanged = false;
-//			String autoBuild = preferences.getProperty(AUTO_BUILD_PREFERENCE_KEY);
-//			if (autoBuild != null) {
-//				preferences.remove(AUTO_BUILD_PREFERENCE_KEY);
-//				HeadlessWorkspaceSettingsHelper.userEnabledAutoBuild = true;
-//				HeadlessWorkspaceSettingsHelper.userEnabledAutoBuildValue = Boolean.valueOf(autoBuild).booleanValue();
-//				preferencesChanged = true;
-//			}
-//			String maxFileStateSize = preferences.getProperty(MAX_FILE_STATE_SIZE_PREFERENCE_KEY);
-//			if (maxFileStateSize != null) {
-//				preferences.remove(MAX_FILE_STATE_SIZE_PREFERENCE_KEY);
-//				HeadlessWorkspaceSettingsHelper.userEnabledMaxFileStateSize = true;
-//				HeadlessWorkspaceSettingsHelper.userEnabledMaxFileStateSizeValue = Long.valueOf(maxFileStateSize)
-//						.longValue();
-//				preferencesChanged = true;
-//			}
-			if (preferencesChanged) {
-				IPath stateLocation = AntCorePlugin.getPlugin().getStateLocation().append("preferenceFile.epf");
-				newPrefFile = stateLocation.toFile();
-				storePreferenceFile(preferences, newPrefFile);
-			} else {
-				newPrefFile = preferenceFile;
-			}
-		} else {
-			newPrefFile = preferenceFile;
-		}
-		return newPrefFile;
+		loadPreferenceFile(preferenceFile);
+		return preferenceFile;
 	}
 
 	private static final Properties loadPreferenceFile(File preferenceFile) throws CoreException {
@@ -151,28 +115,6 @@ public class PreferenceUtilities {
 		return preferences;
 	}
 
-	private static final void storePreferenceFile(Properties preferences, File preferenceFile) throws CoreException {
-		FileOutputStream fos = null;
-		try {
-			fos = new FileOutputStream(preferenceFile);
-			preferences.store(fos, (String) null);
-		} catch (FileNotFoundException fileNotFoundEx) {
-			CoreException coreEx = getCoreException(4, fileNotFoundEx);
-			throw coreEx;
-		} catch (IOException ioEx) {
-			CoreException coreEx = getCoreException(4, ioEx);
-			throw coreEx;
-		} finally {
-			if (fos != null)
-				try {
-					fos.close();
-				} catch (IOException ioEx) {
-					CoreException coreEx = getCoreException(4, ioEx);
-					throw coreEx;
-				}
-		}
-	}
-
 	public static final String getPreference(IScopeContext[] scopeContexts, String qualifier, String key,
 			String defaultValue) {
 		return Platform.getPreferencesService().getString(qualifier, key, defaultValue, scopeContexts);
@@ -188,26 +130,17 @@ public class PreferenceUtilities {
 			fullKey.append(qualifier);
 			fullKey.append("/");
 			fullKey.append(key);
-//			String fullKeyString = fullKey.toString();
-//			if (AUTO_BUILD_PREFERENCE_KEY.equals(fullKeyString)) {
-//				HeadlessWorkspaceSettingsHelper.userEnabledAutoBuild = true;
-//				HeadlessWorkspaceSettingsHelper.userEnabledAutoBuildValue = Boolean.valueOf(newValue).booleanValue();
-//			} else if (MAX_FILE_STATE_SIZE_PREFERENCE_KEY.equals(fullKeyString)) {
-//				HeadlessWorkspaceSettingsHelper.userEnabledMaxFileStateSize = true;
-//				HeadlessWorkspaceSettingsHelper.userEnabledMaxFileStateSizeValue = Long.valueOf(newValue).longValue();
-//			} else {
-				IEclipsePreferences iEclipsePreferences = scopeContext.getNode(qualifier);
-				if (iEclipsePreferences != null) {
-					iEclipsePreferences.put(key, newValue);
-					try {
-						iEclipsePreferences.flush();
-						successfulSet = true;
-					} catch (BackingStoreException backingStoreEx) {
-						CoreException coreEx = getCoreException(4, (Exception) backingStoreEx);
-						throw coreEx;
-					}
+			IEclipsePreferences iEclipsePreferences = scopeContext.getNode(qualifier);
+			if (iEclipsePreferences != null) {
+				iEclipsePreferences.put(key, newValue);
+				try {
+					iEclipsePreferences.flush();
+					successfulSet = true;
+				} catch (BackingStoreException backingStoreEx) {
+					CoreException coreEx = getCoreException(4, (Exception) backingStoreEx);
+					throw coreEx;
 				}
-//			}
+			}
 		}
 		return successfulSet;
 	}

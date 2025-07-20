@@ -44,14 +44,6 @@ public class WorkspacePreferenceFile extends FailOnErrorTask {
 
 	@SuppressWarnings("deprecation")
 	public void execute() throws BuildException {
-	    System.out.println("[DEBUG] in execute(), getProject() = " + getProject());
-	    System.out.println("Ant Task classloader = " + Task.class.getClassLoader());
-	    System.out.println("My class classloader = " + this.getClass().getClassLoader());
-	    System.out.println("instanceof Task? = " + (this instanceof Task));
-	    System.out.println("[DEBUG] this.getClass(): " + this.getClass());
-	    System.out.println("[DEBUG] this.getClass().getSuperclass(): " + this.getClass().getSuperclass());
-	    System.out.println("[DEBUG] getProject() == null: " + (getProject() == null));
-	    
 		super.execute();
 		MonitorHelper provider = new MonitorHelper(this);
 		IProgressMonitor monitor = provider.createProgressGroup();
