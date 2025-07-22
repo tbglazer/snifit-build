@@ -17,6 +17,10 @@ import org.eclipse.ant.core.AntRunner;
 import org.eclipse.ant.core.IAntClasspathEntry;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobManager;
@@ -34,7 +38,7 @@ public class RunAnt extends AntRunner {
 	@Override
 	public Object run(Object argArray) throws Exception {
 		URL[] classloaderURLs = getClasspathURLEntries();
-		for (URL url: classloaderURLs) {
+		for (URL url : classloaderURLs) {
 			System.err.println("*****" + url.toString());
 		}
 		if (classloaderURLs != null && classloaderURLs.length > 0)
@@ -79,38 +83,27 @@ public class RunAnt extends AntRunner {
 		if (antAdditionalCPEntries != null)
 			for (int i = 0; i < antAdditionalCPEntries.length; i++)
 				bundleURL.add(antAdditionalCPEntries[i].getEntryURL());
-		Bundle bundle = getBundle("il.co.fibi.snifit.ant.extras");
-		try {
-			URL rootUrl = FileLocator.resolve(bundle.getEntry("/"));
-			bundleURL.add(rootUrl.toURI().resolve("bin/").toURL());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		IExtensionPoint point = registry.getExtensionPoint("org.eclipse.ant.core.extraClasspathEntries");
+		if (point == null) {
+			System.err.println("No org.eclipse.ant.core.extraClasspathEntries extension point found in bundle.");
 		}
-//		
-//		IExtensionRegistry extRegistry = Platform.getExtensionRegistry();
-//		if (extRegistry != null) {
-//			IConfigurationElement[] bundlesCPEntries = extRegistry.getConfigurationElementsFor(
-//					"il.co.fibi.snifit.ant.extras.tasks", "org.eclipse.ant.core.extraClasspathEntries");
-//			for (int bundleIndex = 0; bundleIndex < bundlesCPEntries.length; bundleIndex++) {
-//				String bundleName = bundlesCPEntries[bundleIndex].getAttribute("name");
-//				if (bundleName != null) {
-//					Bundle bundle = getBundle(bundleName);
-//					if (bundle != null) {
-//						URL root = bundle.getEntry("/");
-//						bundleURL.add(root);
-//						IConfigurationElement[] libraries = bundlesCPEntries[bundleIndex].getChildren("library");
-//						for (int libIndex = 0; libIndex < libraries.length; libIndex++) {
-//							String libPath = libraries[libIndex].getAttribute("path");
-//							if (libPath != null) {
-//								URL libraryURL = bundle.getEntry(libPath);
-//								bundleURL.add(libraryURL);
-//							}
-//						}
-//					}
-//				}
-//			}
-//		}
+		for (IExtension extension : point.getExtensions()) {
+			for (IConfigurationElement config : extension.getConfigurationElements()) {
+				if ("extraClasspathEntry".equals(config.getName())) {
+					String bundleName = extension.getContributor().getName();
+					if (bundleName.equalsIgnoreCase(AntBundleActivator.PLUGIN_ID))
+						try {
+							Bundle bundle = getBundle(AntBundleActivator.PLUGIN_ID);
+							String libraryPath = config.getAttribute("library");
+							URL rootUrl = FileLocator.resolve(bundle.getEntry("/"));
+							bundleURL.add(rootUrl.toURI().resolve(libraryPath).toURL());
+						} catch (Exception e) {
+							System.err.println("Exception in resolving tasks lib path: " + e.getMessage());
+						}
+				}
+			}
+		}
 		return bundleURL.<URL>toArray(new URL[bundleURL.size()]);
 	}
 
@@ -289,4 +282,5 @@ public class RunAnt extends AntRunner {
 	}
 
 	private static File taskTraceFile = null;
+
 }

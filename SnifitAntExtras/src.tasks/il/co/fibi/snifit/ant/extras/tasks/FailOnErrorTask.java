@@ -1,7 +1,6 @@
 package il.co.fibi.snifit.ant.extras.tasks;
 
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.eclipse.core.runtime.IProgressMonitor;
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
-<!--plugin>
-   <extension
+<plugin>
+   <!--extension
          id="il.co.fibi.snifit.ant.tasks"
          name="%tasksName"
          point="org.eclipse.ant.core.antTasks">
@@ -43,15 +43,7 @@
      	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.WorkspacePreferenceSet" />
      <antTask library="lib/antextras.jar" name="snifit.xmlCatalogTask" 
      	headless="true" class="il.co.fibi.snifit.ant.extras.tasks.XMLCatalogTask" />
-   </extension>
-   <extension
-         id="il.co.fibi.snifit.ant.tasks.classpath"
-         name="%classpathName"
-         point="org.eclipse.ant.core.extraClasspathEntries">
-   	  <extraClasspathEntry library="lib/antextras.jar"/>
-   </extension>
-</plugin-->
-<plugin>
+   </extension-->
    <extension
          id="antRunner"
          name="%runnerName"
@@ -60,6 +52,12 @@
            <run
              class="il.co.fibi.snifit.ant.extras.runner.RunAnt" />
     </application>         
+   </extension>
+   <extension
+         id="il.co.fibi.snifit.ant.tasks.classpath"
+         name="%classpathName"
+         point="org.eclipse.ant.core.extraClasspathEntries">
+   	  <extraClasspathEntry library="lib/anttasks.jar"/>
    </extension>
 </plugin>
 

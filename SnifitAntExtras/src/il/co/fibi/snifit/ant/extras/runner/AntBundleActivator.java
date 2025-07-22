@@ -5,7 +5,7 @@ import org.osgi.framework.BundleContext;
 
 public class AntBundleActivator extends Plugin {
   
-  public static final String PLUGIN_ID = "il.co.fibi.snifit.ant.extras.runner";
+  public static final String PLUGIN_ID = "il.co.fibi.snifit.ant.extras";
   
   private static AntBundleActivator plugin = null;
   

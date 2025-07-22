@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Task;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
@@ -21,6 +20,7 @@ public class WorkspacePreferenceFile extends FailOnErrorTask {
 	@Deprecated
 	private boolean useEclipsePrefs = false;
 
+	@SuppressWarnings("unused")
 	@Deprecated
 	private boolean eclipsePrefsSetByAttribute = false;
 
@@ -238,6 +238,7 @@ public class WorkspacePreferenceFile extends FailOnErrorTask {
 					this.preferenceFile.getAbsolutePath()));
 	}
 
+	@SuppressWarnings("unused")
 	@Deprecated
 	private boolean determineUseOfEclipsePrefs(boolean usingEclipsePrefs, boolean setByAttribute) {
 		if (setByAttribute)

@@ -25,7 +25,7 @@ import org.eclipse.wst.server.core.ServerCore;
 import org.eclipse.wst.validation.ValidationFramework;
 
 public class BuildUtilities {
-	@SuppressWarnings("restriction")
+	@SuppressWarnings({ "restriction", "unused" })
 	private static final void waitForStubRuntimes(Task task) throws BuildException {
 		Job[] allJobs = Job.getJobManager().find(null);
 		String wasRuntimeCreationJobName = WebSphereCorePlugin.getResourceStr("L-UpdatingWTERuntime");
@@ -108,7 +108,7 @@ public class BuildUtilities {
 
 	public static void buildWorkspace(IWorkspace workspace, int kind, Task task, IProgressMonitor monitor)
 			throws CoreException, OperationCanceledException, InterruptedException {
-		waitForStubRuntimes(task);
+		//waitForStubRuntimes(task);
 		validateContainers(workspace, task);
 		workspace.build(kind, monitor);
 		ValidationFramework.getDefault().joinValidationOnly(monitor);
@@ -116,7 +116,7 @@ public class BuildUtilities {
 
 	public static void buildProject(IProject project, int kind, Task task, IProgressMonitor monitor)
 			throws CoreException, OperationCanceledException, InterruptedException {
-		waitForStubRuntimes(task);
+		//waitForStubRuntimes(task);
 		validateContainers(project, task);
 		project.build(kind, monitor);
 		ValidationFramework.getDefault().joinValidationOnly(monitor);
