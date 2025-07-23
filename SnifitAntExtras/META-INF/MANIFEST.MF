@@ -4,7 +4,7 @@ Bundle-Name: %pluginName
 Bundle-SymbolicName: il.co.fibi.snifit.ant.extras;singleton:=true
 Automatic-Module-Name: il.co.fibi.snifit.ant.extras
 Bundle-Vendor: %providerName
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: il.co.fibi.snifit.ant.extras.runner.AntBundleActivator
 Export-Package: il.co.fibi.snifit.ant.extras.common,
  il.co.fibi.snifit.ant.extras.runner,
