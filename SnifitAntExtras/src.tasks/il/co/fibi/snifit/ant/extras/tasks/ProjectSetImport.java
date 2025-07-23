@@ -129,7 +129,7 @@ public class ProjectSetImport extends FailOnErrorTask {
 								new Path(new File(sourceProjectDir, ".project").getAbsolutePath()));
 						IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(description.getName());
 						if (this.autoDeleteExistingProjects && project.exists()) {
-							project.delete(false, null);
+							project.delete(false, false, null);
 						}
 						project.create(description, null);
 						project.open(null);
