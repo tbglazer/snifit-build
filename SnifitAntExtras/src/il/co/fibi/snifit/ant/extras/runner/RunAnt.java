@@ -38,9 +38,6 @@ public class RunAnt extends AntRunner {
 	@Override
 	public Object run(Object argArray) throws Exception {
 		URL[] classloaderURLs = getClasspathURLEntries();
-		for (URL url : classloaderURLs) {
-			System.err.println("*****" + url.toString());
-		}
 		if (classloaderURLs != null && classloaderURLs.length > 0)
 			setCustomClasspath(classloaderURLs);
 		System.setProperty("ant.headless.environment", "true");
