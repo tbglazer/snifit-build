@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description name="Snifit Build Tools Update Site">
+      A collection of build tools used in the process of building snifit
+   </description>
+   <feature url="features/il.co.fibi.snifit.ant.extras.feature_1.0.0.202507251618.jar" id="il.co.fibi.snifit.ant.extras.feature" version="1.0.0.202507251618" os="win32" ws="win32" arch="x86_64">
+      <category name="il.co.fibi.snifit.build.tools"/>
+   </feature>
+   <category-def name="il.co.fibi.snifit.build.tools" label="Snifit Build Tools"/>
+</site>
